@@ -24,13 +24,18 @@ var cf = function(value){
 }
 
 var validation = function(value){
-    var open_bracket_stack = [];
-    var close_bracket_stack = [];
+    var bracket_stack = [];
     Array.prototype.forEach.call(value, function(c) {
-        if(c == '[') open_bracket_stack.push(c);
-        if(c == ']') close_bracket_stack.push(c);
+        if(c == '[') bracket_stack.push(c);
+        if(c == ']') {
+            if(bracket_stack.length > 0){
+                bracket_stack.pop();
+            }else{
+                return {status: false, log: "Bracket not match."}
+            }
+        }
     });
-    if (open_bracket_stack.length != close_bracket_stack.length){
+    if (open_bracket_stack.length > 0){
         return {status: false, log: "Bracket not match. "};
     }else{
         return {status: true, log: ""};
