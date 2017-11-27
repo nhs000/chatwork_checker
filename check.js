@@ -35,17 +35,20 @@ var validation = function(value){
             }
         }
     });
-    if (open_bracket_stack.length > 0){
+    if (bracket_stack.length > 0){
         return {status: false, log: "Bracket not match. "};
     }else{
         return {status: true, log: ""};
     }
 }
 
-inputElem.addEventListener('keydown', function(event){
-    if(checkFn(event)){
-        if(cf(inputElem.value)){
-            event.preventDefault();
+var init = function(){
+    inputElem.addEventListener('keydown', function(event){
+        if(checkFn(event)){
+            if(cf(inputElem.value)){
+                event.preventDefault();
+            }
         }
-    }
-});
+    });
+}
+init();
