@@ -1,5 +1,3 @@
-var inputElem = document.getElementById("_chatText");
-var checkEnter = document.getElementById("_sendEnterAction");
 var checkFn = function(event){
     if(checkEnter.getAttribute('aria-checked') == "true"){
         return event.keyCode == 13 && !event.shiftKey;
@@ -51,4 +49,8 @@ var init = function(){
         }
     });
 }
-init();
+var inputElem = document.getElementById("_chatText");
+var checkEnter = document.getElementById("_sendEnterAction");
+if(inputElem && checkEnter){
+    init();
+}
