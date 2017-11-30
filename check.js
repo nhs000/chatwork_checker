@@ -1,8 +1,8 @@
 var checkFn = function(event){
     if(checkEnter.getAttribute('aria-checked') == "true"){
-        return event.keyCode == 13 && !event.shiftKey;
+        return event.keyCode == 13 && !event.shiftKey && ! event.ctrlKey;
     } else{
-        return event.keyCode == 13 && event.shiftKey;
+        return event.keyCode == 13 && (event.shiftKey || event.ctrlKey);
     }
 }
 
@@ -23,17 +23,20 @@ var cf = function(value){
 
 var validation = function(value){
     var bracket_stack = [];
+    var rs = {};
+    var not_match_flag = false;
     Array.prototype.forEach.call(value, function(c) {
         if(c == '[') bracket_stack.push(c);
         if(c == ']') {
             if(bracket_stack.length > 0){
                 bracket_stack.pop();
             }else{
-                return {status: false, log: "Bracket not match."}
+                not_match_flag = true;
+                return false;
             }
         }
     });
-    if (bracket_stack.length > 0){
+    if (bracket_stack.length > 0 || not_match_flag){
         return {status: false, log: "Bracket not match. "};
     }else{
         return {status: true, log: ""};
